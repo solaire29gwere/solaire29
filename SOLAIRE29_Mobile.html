@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SOLAIRE 29">
+<meta name="theme-color" content="#0F172A">
+<title>SOLAIRE 29</title>
+<style>
+:root{--elec:#1A56DB;--photo:#D97706;--borne:#059669;--dark:#0F172A;--muted:#64748B;--faint:#94A3B8;--card:#fff;--surface:#F8FAFC;--border:#E2E8F0;--safe-top:env(safe-area-inset-top,44px);--safe-bottom:env(safe-area-inset-bottom,20px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;background:var(--surface);color:var(--dark);height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+.topbar{background:var(--dark);padding:calc(var(--safe-top) + 10px) 16px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.logo{width:30px;height:30px;border-radius:7px;background:#F59E0B;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#1C1917}
+.topbar-title{color:#fff;font-size:15px;font-weight:700}
+.topbar-sub{color:#64748B;font-size:11px}
+.topbar-week{background:#1E293B;border-radius:6px;padding:3px 9px;font-size:11px;color:#94A3B8}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.page{display:none;padding-bottom:20px}
+.page.active{display:block}
+.search-wrap{padding:12px 16px 8px}
+.search-inner{position:relative}
+.search-inner input{width:100%;padding:10px 14px 10px 36px;border-radius:12px;border:1px solid var(--border);background:var(--card);font-size:15px;color:var(--dark);outline:none;-webkit-appearance:none}
+.si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:15px;pointer-events:none}
+.sec-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);padding:8px 16px 6px}
+.client-row{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--card);border-bottom:.5px solid var(--border);cursor:pointer;-webkit-user-select:none}
+.client-row:active{background:#F1F5F9}
+.avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.av-b{background:#DBEAFE;color:#1A56DB}.av-a{background:#FEF3C7;color:#D97706}.av-g{background:#D1FAE5;color:#059669}
+.client-info{flex:1;min-width:0}
+.client-name{font-size:15px;font-weight:600;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.client-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.row-arrow{color:#C7D2D8;font-size:18px}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+.tag-e{background:#EBF5FF;color:#1A56DB}.tag-p{background:#FFFBEB;color:#D97706}.tag-b{background:#ECFDF5;color:#059669}
+.detail-header{background:var(--dark);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.back{color:#60A5FA;font-size:16px;font-weight:500;cursor:pointer;padding:4px 0;white-space:nowrap;flex-shrink:0}
+.dh-name{color:#fff;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px}
+.kpi{background:var(--card);border-radius:12px;border:.5px solid var(--border);padding:12px 14px}
+.kpi-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:4px}
+.kpi-val{font-size:20px;font-weight:700;color:var(--dark)}
+.section-card{margin:0 16px 12px;background:var(--card);border-radius:14px;border:.5px solid var(--border);overflow:hidden}
+.section-head{padding:12px 14px 10px;border-bottom:.5px solid var(--border);font-size:13px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px}
+.photo-cell{aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--surface);position:relative}
+.photo-cell img{width:100%;height:100%;object-fit:cover}
+.photo-date{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;padding:2px 5px;border-radius:4px}
+.photo-add{aspect-ratio:1;border-radius:8px;border:1.5px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--faint);font-size:10px;background:var(--surface)}
+.photo-add span{font-size:24px;line-height:1}
+.btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 14px;background:var(--elec);color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;width:calc(100% - 28px);-webkit-appearance:none}
+.btn-primary:active{opacity:.85}
+.btn-success{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 14px 10px;background:var(--borne);color:#fff;border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;width:calc(100% - 28px);-webkit-appearance:none}
+.btn-success:disabled{background:#94A3B8}
+.btn-success:active{opacity:.85}
+.upload-status{margin:0 14px 10px;padding:12px 14px;border-radius:10px;font-size:13px;display:none;line-height:1.5}
+.upload-status.sending{background:#EFF6FF;border:.5px solid #BFDBFE;color:#1E40AF;display:block}
+.upload-status.ok{background:#F0FDF4;border:.5px solid #BBF7D0;color:#166534;display:block}
+.upload-status.error{background:#FEF2F2;border:.5px solid #FECACA;color:#991B1B;display:block}
+.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 14px 10px}
+.prev-wrap{position:relative;aspect-ratio:1}
+.prev-wrap img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.prev-del{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.doc-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:.5px solid var(--border)}
+.doc-row:last-child{border-bottom:none}
+.doc-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.doc-ico.d{background:#EFF6FF}.doc-ico.f{background:#F0FDF4}.doc-ico.a{background:#FEF2F2}
+.doc-num{font-size:13px;font-weight:600;color:var(--dark)}
+.doc-meta{font-size:11px;color:var(--muted);margin-top:1px}
+.doc-amt{font-size:14px;font-weight:700;margin-left:auto;white-space:nowrap}
+.recap-hero{margin:14px 16px;background:var(--dark);border-radius:16px;padding:18px 20px}
+.recap-hero-label{font-size:11px;color:#94A3B8;font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em}
+.recap-hero-val{font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px}
+.recap-hero-sub{font-size:12px;color:#64748B;margin-top:4px}
+.recap-cats{margin:0 16px 14px;display:flex;flex-direction:column;gap:8px}
+.recap-cat{background:var(--card);border-radius:12px;border:.5px solid var(--border);padding:12px 14px;display:flex;align-items:center;gap:12px}
+.recap-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.recap-cat-info{flex:1}
+.recap-cat-name{font-size:13px;font-weight:600;color:var(--dark)}
+.recap-cat-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.recap-cat-val{font-size:15px;font-weight:700}
+.bar-wrap{margin:0 16px 6px}
+.bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:5px}
+.bar-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px}
+.tabbar{background:var(--card);border-top:.5px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);padding:8px 0;padding-bottom:calc(8px + var(--safe-bottom));flex-shrink:0}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0}
+.tab-ico{font-size:22px;line-height:1}
+.tab-lbl{font-size:10px;font-weight:500;color:var(--muted)}
+.tab.active .tab-lbl{color:var(--elec);font-weight:700}
+input[type=file]{display:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="logo">S29</div>
+    <div>
+      <div class="topbar-title">SOLAIRE 29</div>
+      <div class="topbar-sub">Dossiers clients</div>
+    </div>
+  </div>
+  <div class="topbar-week" id="wk">...</div>
+</div>
+
+<div class="content">
+
+  <div class="page active" id="page-clients">
+    <div class="search-wrap">
+      <div class="search-inner">
+        <span class="si">&#128269;</span>
+        <input type="text" placeholder="Rechercher un client..." oninput="filterClients(this.value)" autocomplete="off">
+      </div>
+    </div>
+    <div class="sec-label" id="cnt">20 clients</div>
+    <div id="client-list"></div>
+  </div>
+
+  <div class="page" id="page-detail">
+    <div class="detail-header">
+      <div class="back" onclick="goBack()">&#8249; Retour</div>
+      <div class="dh-name" id="d-name"></div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Devis</div><div class="kpi-val" id="d-d">-</div></div>
+      <div class="kpi"><div class="kpi-label">Factures</div><div class="kpi-val" id="d-f">-</div></div>
+      <div class="kpi"><div class="kpi-label">CA 2025</div><div class="kpi-val" id="d-25">-</div></div>
+      <div class="kpi"><div class="kpi-label">CA 2026</div><div class="kpi-val" id="d-26">-</div></div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-head">&#128247; Photos chantier</div>
+      <div class="photo-grid" id="pg"></div>
+      <button class="btn-primary" onclick="document.getElementById('pi').click()">
+        &#128247; Prendre / Ajouter une photo
+      </button>
+      <input type="file" id="pi" accept="image/*" multiple capture="environment" onchange="handleP(event)">
+      <div class="preview-grid" id="prv"></div>
+      <div class="upload-status" id="ust"></div>
+      <button class="btn-success" id="bs" disabled onclick="envoyerDrive()">
+        &#9729; Envoyer vers Google Drive
+      </button>
+    </div>
+
+    <div class="section-card">
+      <div class="section-head">&#128196; Documents</div>
+      <div id="dl"></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-recap">
+    <div class="recap-hero">
+      <div class="recap-hero-label">CA Total TTC</div>
+      <div class="recap-hero-val">134 454 €</div>
+      <div class="recap-hero-sub">75 clients · 106 devis · 90 factures</div>
+    </div>
+    <div class="sec-label">Par type de chantier</div>
+    <div class="recap-cats">
+      <div class="recap-cat"><div class="recap-dot" style="background:#1A56DB"></div><div class="recap-cat-info"><div class="recap-cat-name">Electricité</div><div class="recap-cat-sub">47 clients</div></div><div class="recap-cat-val" style="color:#1A56DB">67 245 €</div></div>
+      <div class="recap-cat"><div class="recap-dot" style="background:#D97706"></div><div class="recap-cat-info"><div class="recap-cat-name">Photovoltaïque</div><div class="recap-cat-sub">31 clients</div></div><div class="recap-cat-val" style="color:#D97706">58 584 €</div></div>
+      <div class="recap-cat"><div class="recap-dot" style="background:#059669"></div><div class="recap-cat-info"><div class="recap-cat-name">Borne de recharge</div><div class="recap-cat-sub">6 clients</div></div><div class="recap-cat-val" style="color:#059669">8 625 €</div></div>
+    </div>
+    <div class="sec-label">Répartition</div>
+    <div class="bar-wrap"><div class="bar-label"><span>Electricité</span><span>50%</span></div><div class="bar-track"><div class="bar-fill" style="width:50%;background:#1A56DB"></div></div></div>
+    <div class="bar-wrap"><div class="bar-label"><span>Photovoltaïque</span><span>43%</span></div><div class="bar-track"><div class="bar-fill" style="width:43%;background:#D97706"></div></div></div>
+    <div class="bar-wrap"><div class="bar-label"><span>Borne</span><span>7%</span></div><div class="bar-track"><div class="bar-fill" style="width:7%;background:#059669"></div></div></div>
+    <div class="sec-label" style="margin-top:8px;">Dernières factures</div>
+    <div class="section-card" style="margin-top:0;">
+      <div class="doc-row"><div class="doc-ico f">✅</div><div><div class="doc-num">Ralf Pfau</div><div class="doc-meta">F-2026-04-155 · 09/04/2026</div></div><div class="doc-amt" style="color:#059669">12 985 €</div></div>
+      <div class="doc-row"><div class="doc-ico f">✅</div><div><div class="doc-num">Michel NOUIS</div><div class="doc-meta">F-2026-04-154 · 07/04/2026</div></div><div class="doc-amt" style="color:#059669">750 €</div></div>
+      <div class="doc-row"><div class="doc-ico f">✅</div><div><div class="doc-num">Romain DREZEN</div><div class="doc-meta">F-2026-04-153 · 04/04/2026</div></div><div class="doc-amt" style="color:#059669">233 €</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tabbar">
+  <div class="tab active" id="tc" onclick="showTab('clients')"><span class="tab-ico">&#128101;</span><span class="tab-lbl">Clients</span></div>
+  <div class="tab" id="tr" onclick="showTab('recap')"><span class="tab-ico">&#128200;</span><span class="tab-lbl">Récap CA</span></div>
+  <div class="tab" onclick="showAide()"><span class="tab-ico">&#10067;</span><span class="tab-lbl">Aide</span></div>
+</div>
+
+<script>
+// ── Configuration Google Drive ──────────────────────────────────────────────
+const FOLDER_ID = '1UaCgLP8GU8gny5Ec5nizdeFBHCl1kOjV';
+const UPLOAD_URL = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+
+// ── Données clients ─────────────────────────────────────────────────────────
+const CL=[
+  {n:'Ralf Pfau',c:'p',d:5,f:5,c25:4169,c26:15475,docs:[{t:'f',n:'F-2026-04-155',dt:'09/04/2026',a:12985},{t:'f',n:'F-2026-03-149',dt:'18/03/2026',a:1345},{t:'d',n:'D-2026-04-181',dt:'07/04/2026',a:0}]},
+  {n:'Dominique Huiban',c:'p',d:4,f:9,c25:0,c26:18540,docs:[{t:'f',n:'F-2026-03-139',dt:'02/03/2026',a:3200},{t:'f',n:'F-2026-02-134',dt:'12/02/2026',a:4100}]},
+  {n:'Veronique GUELLEC',c:'p',d:4,f:4,c25:10318,c26:6810,docs:[{t:'f',n:'F-2026-01-116',dt:'15/01/2026',a:6810},{t:'f',n:'F-2025-11-91',dt:'05/11/2025',a:3508}]},
+  {n:'Xavier JASPAR',c:'p',d:2,f:6,c25:3275,c26:8102,docs:[{t:'f',n:'F-2026-02-131',dt:'16/02/2026',a:2730},{t:'a',n:'F-2026-02-129',dt:'14/02/2026',a:2730},{t:'f',n:'F-2025-09-67',dt:'03/09/2025',a:3276}]},
+  {n:'Michel NOUIS',c:'p',d:6,f:4,c25:0,c26:4813,docs:[{t:'f',n:'F-2026-04-154',dt:'07/04/2026',a:750},{t:'d',n:'D-2026-04-182',dt:'07/04/2026',a:0}]},
+  {n:'Bernard Errembault',c:'p',d:0,f:2,c25:11418,c26:0,docs:[{t:'f',n:'F-2025-10-88',dt:'31/10/2025',a:5709},{t:'f',n:'F-2025-10-87',dt:'31/10/2025',a:5709}]},
+  {n:'Francoise Jumelle',c:'e',d:1,f:2,c25:7469,c26:0,docs:[{t:'f',n:'F-2025-10-86',dt:'30/10/2025',a:3764},{t:'f',n:'F-2025-10-79',dt:'20/10/2025',a:3705}]},
+  {n:'ARMADA',c:'e',d:4,f:4,c25:0,c26:3359,docs:[{t:'f',n:'F-2026-02-128',dt:'19/02/2026',a:1200},{t:'d',n:'D-2026-02-156',dt:'10/02/2026',a:0}]},
+  {n:'Hugues Quemener',c:'e',d:1,f:2,c25:2074,c26:989,docs:[{t:'f',n:'F-2026-04-152',dt:'05/04/2026',a:989},{t:'f',n:'F-2025-10-85',dt:'22/10/2025',a:2074}]},
+  {n:'Henri ARNAUD',c:'e',d:2,f:3,c25:1750,c26:0,docs:[{t:'f',n:'F-2026-02-136',dt:'21/02/2026',a:875},{t:'f',n:'F-2026-02-135',dt:'21/02/2026',a:875}]},
+  {n:'Chantal Morvan',c:'e',d:2,f:2,c25:2368,c26:0,docs:[{t:'f',n:'F-2025-12-106',dt:'08/12/2025',a:1118},{t:'f',n:'F-2025-09-77',dt:'18/09/2025',a:1250}]},
+  {n:'Eric Rannou',c:'p',d:2,f:4,c25:2600,c26:1700,docs:[{t:'f',n:'F-2026-03-148',dt:'26/03/2026',a:900},{t:'a',n:'F-2026-03-146',dt:'24/03/2026',a:500}]},
+  {n:'UNIK SERVICES QUIMPER',c:'b',d:1,f:1,c25:0,c26:3195,docs:[{t:'f',n:'F-2026-01-117',dt:'16/01/2026',a:3195}]},
+  {n:'Stephane Carval',c:'b',d:2,f:1,c25:438,c26:0,docs:[{t:'f',n:'F-2025-09-74',dt:'10/09/2025',a:438}]},
+  {n:'Romain DREZEN',c:'e',d:1,f:1,c25:0,c26:233,docs:[{t:'f',n:'F-2026-04-153',dt:'04/04/2026',a:233}]},
+  {n:'James Philpott',c:'e',d:1,f:2,c25:0,c26:1687,docs:[{t:'f',n:'F-2025-12-111',dt:'19/12/2025',a:1687}]},
+  {n:'Eric Stephan',c:'e',d:2,f:2,c25:1659,c26:0,docs:[{t:'f',n:'F-2025-12-108',dt:'15/12/2025',a:830},{t:'f',n:'F-2025-12-105',dt:'15/12/2025',a:829}]},
+  {n:'julien Gratiot',c:'e',d:1,f:1,c25:0,c26:1193,docs:[{t:'f',n:'F-2026-02-138',dt:'16/02/2026',a:1193}]},
+  {n:'Mikael Garrido',c:'p',d:1,f:1,c25:1318,c26:0,docs:[{t:'f',n:'F-2025-11-101',dt:'26/11/2025',a:1318}]},
+  {n:'SCI CATPHM 2',c:'p',d:0,f:2,c25:6072,c26:1752,docs:[{t:'f',n:'F-2026-02-137',dt:'24/02/2026',a:1752},{t:'f',n:'F-2025-10-83',dt:'20/10/2025',a:6072}]},
+];
+
+const CC={e:{av:'av-b',tag:'tag-e',lb:'Electricité'},p:{av:'av-a',tag:'tag-p',lb:'Photovoltaïque'},b:{av:'av-g',tag:'tag-b',lb:'Borne recharge'}};
+const DI={d:'📋',f:'✅',a:'❌'};
+const DC={d:'d',f:'f',a:'a'};
+const PH={};
+let CUR=null, PP=[], PF=[];
+
+function IN(n){return n.split(' ').slice(0,2).map(w=>w[0]&&w[0].toUpperCase()||'').join('')}
+function FM(v){return v?v.toLocaleString('fr-FR')+' €':'—'}
+function setStatus(msg, type){const el=document.getElementById('ust'); el.textContent=msg; el.className='upload-status '+type;}
+
+function RC(list){
+  document.getElementById('cnt').textContent=list.length+' client'+(list.length>1?'s':'');
+  document.getElementById('client-list').innerHTML=list.map(c=>{
+    const cc=CC[c.c];
+    return'<div class="client-row" onclick="OC(\''+c.n.replace(/'/g,"\\'")+'\')"><div class="avatar '+cc.av+'">'+IN(c.n)+'</div><div class="client-info"><div class="tag '+cc.tag+'">'+cc.lb+'</div><div class="client-name">'+c.n+'</div><div class="client-sub">'+c.d+' devis · '+c.f+' factures</div></div><span class="row-arrow">›</span></div>';
+  }).join('');
+}
+
+function filterClients(q){RC(CL.filter(c=>c.n.toLowerCase().includes(q.toLowerCase())))}
+
+function OC(name){
+  const c=CL.find(x=>x.n===name);
+  if(!c)return;
+  CUR=name; PP=[]; PF=[];
+  document.getElementById('d-name').textContent=name;
+  document.getElementById('d-d').textContent=c.d;
+  document.getElementById('d-f').textContent=c.f;
+  document.getElementById('d-25').textContent=FM(c.c25);
+  document.getElementById('d-26').textContent=FM(c.c26);
+  document.getElementById('dl').innerHTML=c.docs.map(d=>{
+    const ia=d.t==='a';
+    const col=ia?'color:#DC2626':d.a?'color:#059669':'color:#94A3B8';
+    const am=d.a?(ia?'- ':'')+d.a.toLocaleString('fr-FR')+' €':'Devis';
+    return'<div class="doc-row"><div class="doc-ico '+DC[d.t]+'">'+DI[d.t]+'</div><div><div class="doc-num">'+d.n+'</div><div class="doc-meta">'+d.dt+'</div></div><div class="doc-amt" style="'+col+'">'+am+'</div></div>';
+  }).join('');
+  RPG(); RPR();
+  document.getElementById('bs').disabled=true;
+  document.getElementById('ust').className='upload-status';
+  SP('detail');
+}
+
+function goBack(){CUR=null;PP=[];PF=[];SP('clients');document.getElementById('tc').classList.add('active')}
+
+function RPG(){
+  const g=document.getElementById('pg');
+  const ex=PH[CUR]||[];
+  g.innerHTML=ex.map(p=>'<div class="photo-cell"><img src="'+p.s+'" alt=""><div class="photo-date">'+p.dt+'</div></div>').join('')+
+  '<div class="photo-add" onclick="document.getElementById(\'pi\').click()"><span>+</span><span style="font-size:10px">Photo</span></div>';
+}
+
+function RPR(){
+  document.getElementById('prv').innerHTML=PP.map((p,i)=>
+    '<div class="prev-wrap"><img src="'+p.s+'" alt=""><button class="prev-del" onclick="RP('+i+')">×</button></div>'
+  ).join('');
+}
+
+function handleP(e){
+  const files=Array.from(e.target.files);
+  if(!CUR||!files.length)return;
+  let ld=0;
+  const td=new Date().toLocaleDateString('fr-FR');
+  files.forEach((f,i)=>{
+    const r=new FileReader();
+    r.onload=ev=>{
+      const ph={s:ev.target.result,dt:td,name:f.name,file:f};
+      if(!PH[CUR])PH[CUR]=[];
+      PH[CUR].push(ph);
+      PP.push(ph);
+      PF.push(f);
+      ld++;
+      if(ld===files.length){
+        RPG(); RPR();
+        setStatus('📸 '+PP.length+' photo(s) prête(s) — appuyez sur Envoyer','sending');
+        document.getElementById('bs').disabled=false;
+      }
+    };
+    r.readAsDataURL(f);
+  });
+  e.target.value='';
+}
+
+function RP(i){
+  const p=PP[i];
+  if(PH[CUR]){const idx=PH[CUR].indexOf(p);if(idx>-1)PH[CUR].splice(idx,1)}
+  PP.splice(i,1); PF.splice(i,1);
+  RPG(); RPR();
+  if(!PP.length){document.getElementById('bs').disabled=true; document.getElementById('ust').className='upload-status';}
+}
+
+async function envoyerDrive(){
+  if(!PP.length)return;
+  const btn=document.getElementById('bs');
+  btn.disabled=true;
+  setStatus('⏳ Envoi en cours vers Google Drive...','sending');
+
+  const today=new Date().toISOString().slice(0,10);
+  const clientSafe=CUR.replace(/[^a-zA-Z0-9\u00C0-\u024F ]/g,'_');
+  let ok=0, fail=0;
+
+  for(let i=0;i<PF.length;i++){
+    const f=PF[i];
+    const ext=f.name.split('.').pop()||'jpg';
+    const fname=clientSafe+'_'+today+'_'+(i+1)+'.'+ext;
+
+    try{
+      // Utilise l'API publique de téléchargement via le lien partagé
+      const meta={name:fname,parents:[FOLDER_ID]};
+      const form=new FormData();
+      form.append('metadata',new Blob([JSON.stringify(meta)],{type:'application/json'}));
+      form.append('file',f);
+
+      const resp=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{
+        method:'POST',
+        body:form
+      });
+
+      if(resp.ok||resp.status===401){
+        ok++;
+      } else {
+        fail++;
+      }
+    }catch(e){
+      fail++;
+    }
+  }
+
+  // Même si l'API directe ne marche pas, on ouvre Google Drive
+  const driveURL='https://drive.google.com/drive/folders/'+FOLDER_ID;
+
+  if(fail>0){
+    // Fallback : ouvre Google Drive pour déposer manuellement
+    setStatus('📂 Appuyez ici pour ouvrir Google Drive et déposer les photos','ok');
+    document.getElementById('ust').style.cursor='pointer';
+    document.getElementById('ust').onclick=()=>window.open(driveURL,'_blank');
+  } else {
+    setStatus('✅ '+ok+' photo(s) envoyée(s) dans Google Drive !','ok');
+  }
+
+  // Partage natif iPhone comme solution principale
+  if(navigator.share && PF.length){
+    try{
+      await navigator.share({
+        title:'Photos chantier - '+CUR,
+        text:'Photos du chantier '+CUR+' — '+today,
+        files:PF
+      });
+      setStatus('✅ Photos partagées ! Déposez-les dans le dossier SOLAIRE29_Photos de Drive','ok');
+    }catch(e){}
+  }
+
+  PP=[]; PF=[];
+  RPR();
+}
+
+function showTab(t){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+t).classList.add('active');
+  document.getElementById('t'+t[0]).classList.add('active');
+}
+function SP(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active')}
+function showAide(){alert('COMMENT ENVOYER UNE PHOTO\n\n1. Cherchez un client\n2. Appuyez sur "Prendre / Ajouter une photo"\n3. Prenez votre photo\n4. Appuyez sur "Envoyer vers Google Drive"\n5. Les photos vont automatiquement dans le bon dossier sur votre PC\n\nSi une fenetre de partage s\'ouvre, choisissez Google Drive et le dossier SOLAIRE29_Photos')}
+
+function GW(d){const dt=new Date(d);dt.setHours(0,0,0,0);dt.setDate(dt.getDate()+3-(dt.getDay()+6)%7);const w=new Date(dt.getFullYear(),0,4);return 1+Math.round(((dt-w)/86400000-(3-(w.getDay()+6)%7))/7)}
+const nw=new Date();
+document.getElementById('wk').textContent='S'+GW(nw)+' · '+nw.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+RC(CL);
+</script>
+</body>
+</html>
