@@ -43,22 +43,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;backg
 .kpi-label{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:4px}
 .kpi-val{font-size:20px;font-weight:700;color:var(--dark)}
 .section-card{margin:0 16px 12px;background:var(--card);border-radius:14px;border:.5px solid var(--border);overflow:hidden}
-.section-head{padding:12px 14px 10px;border-bottom:.5px solid var(--border);font-size:13px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:8px}
+.section-head{padding:12px 14px 10px;border-bottom:.5px solid var(--border);font-size:13px;font-weight:700;color:var(--dark);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.section-head-left{display:flex;align-items:center;gap:8px}
 .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px}
 .photo-cell{aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--surface);position:relative}
 .photo-cell img{width:100%;height:100%;object-fit:cover}
 .photo-date{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;padding:2px 5px;border-radius:4px}
 .photo-add{aspect-ratio:1;border-radius:8px;border:1.5px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--faint);font-size:10px;background:var(--surface)}
 .photo-add span{font-size:24px;line-height:1}
-.btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 14px;background:var(--elec);color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;width:calc(100% - 28px);-webkit-appearance:none}
-.btn-primary:active{opacity:.85}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 14px}
+.btn-cam{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--elec);color:#fff;border:none;border-radius:14px;padding:14px 10px;font-size:14px;font-weight:700;cursor:pointer;-webkit-appearance:none}
+.btn-cam:active{opacity:.85}
+.btn-gal{display:flex;align-items:center;justify-content:center;gap:6px;background:#6366F1;color:#fff;border:none;border-radius:14px;padding:14px 10px;font-size:14px;font-weight:700;cursor:pointer;-webkit-appearance:none}
+.btn-gal:active{opacity:.85}
 .btn-success{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 14px 10px;background:var(--borne);color:#fff;border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;width:calc(100% - 28px);-webkit-appearance:none}
 .btn-success:disabled{background:#94A3B8}
 .btn-success:active{opacity:.85}
 .upload-status{margin:0 14px 10px;padding:12px 14px;border-radius:10px;font-size:13px;display:none;line-height:1.5}
-.upload-status.sending{background:#EFF6FF;border:.5px solid #BFDBFE;color:#1E40AF;display:block}
+.upload-status.info{background:#EFF6FF;border:.5px solid #BFDBFE;color:#1E40AF;display:block}
 .upload-status.ok{background:#F0FDF4;border:.5px solid #BBF7D0;color:#166534;display:block}
-.upload-status.error{background:#FEF2F2;border:.5px solid #FECACA;color:#991B1B;display:block}
+.upload-status.warn{background:#FFFBEB;border:.5px solid #FDE68A;color:#92400E;display:block}
 .preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 14px 10px}
 .prev-wrap{position:relative;aspect-ratio:1}
 .prev-wrap img{width:100%;height:100%;object-fit:cover;border-radius:8px}
@@ -70,6 +74,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif;backg
 .doc-num{font-size:13px;font-weight:600;color:var(--dark)}
 .doc-meta{font-size:11px;color:var(--muted);margin-top:1px}
 .doc-amt{font-size:14px;font-weight:700;margin-left:auto;white-space:nowrap}
+
+/* DICTAPHONE */
+.mic-zone{padding:14px}
+.mic-btn{width:100%;padding:18px;border-radius:16px;border:none;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;-webkit-appearance:none;transition:all .2s}
+.mic-btn.idle{background:#F1F5F9;color:var(--dark);border:2px solid var(--border)}
+.mic-btn.recording{background:#DC2626;color:#fff;animation:pulse-rec 1s infinite}
+@keyframes pulse-rec{0%,100%{opacity:1}50%{opacity:.7}}
+.mic-timer{text-align:center;font-size:13px;color:var(--muted);margin-top:8px;font-variant-numeric:tabular-nums}
+.transcript-box{margin:10px 0 0;background:var(--surface);border-radius:12px;border:.5px solid var(--border);padding:12px;min-height:80px;font-size:14px;line-height:1.6;color:var(--dark);white-space:pre-wrap}
+.transcript-box.empty{color:var(--faint);font-style:italic}
+.note-type-row{display:flex;gap:6px;padding:8px 14px 0;flex-wrap:wrap}
+.note-type-btn{padding:6px 12px;border-radius:20px;border:.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:var(--surface);color:var(--muted)}
+.note-type-btn.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.notes-list{padding:0 14px 10px;display:flex;flex-direction:column;gap:6px}
+.note-item{background:var(--surface);border-radius:10px;padding:10px 12px;border:.5px solid var(--border);position:relative}
+.note-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.note-item-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.note-item-date{font-size:10px;color:var(--faint)}
+.note-item-text{font-size:13px;color:var(--dark);line-height:1.5}
+.note-del{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--faint);font-size:16px;cursor:pointer;padding:2px}
+.btn-export{margin:8px 14px 0;background:#7C3AED;color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;width:calc(100% - 28px);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-export:active{opacity:.85}
+.note-types{idée:'💡 Idée',matériel:'🔧 Matériel',mesure:'📐 Mesure',problème:'⚠️ Problème',tâche:'✅ Tâche'}
+
+/* RECAP */
 .recap-hero{margin:14px 16px;background:var(--dark);border-radius:16px;padding:18px 20px}
 .recap-hero-label{font-size:11px;color:#94A3B8;font-weight:500;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em}
 .recap-hero-val{font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px}
@@ -108,6 +137,7 @@ input[type=file]{display:none}
 
 <div class="content">
 
+  <!-- PAGE CLIENTS -->
   <div class="page active" id="page-clients">
     <div class="search-wrap">
       <div class="search-inner">
@@ -119,6 +149,7 @@ input[type=file]{display:none}
     <div id="client-list"></div>
   </div>
 
+  <!-- PAGE DETAIL -->
   <div class="page" id="page-detail">
     <div class="detail-header">
       <div class="back" onclick="goBack()">&#8249; Retour</div>
@@ -131,26 +162,73 @@ input[type=file]{display:none}
       <div class="kpi"><div class="kpi-label">CA 2026</div><div class="kpi-val" id="d-26">-</div></div>
     </div>
 
+    <!-- DICTAPHONE -->
     <div class="section-card">
-      <div class="section-head">&#128247; Photos chantier</div>
-      <div class="photo-grid" id="pg"></div>
-      <button class="btn-primary" onclick="document.getElementById('pi').click()">
-        &#128247; Prendre / Ajouter une photo
-      </button>
-      <input type="file" id="pi" accept="image/*" multiple capture="environment" onchange="handleP(event)">
-      <div class="preview-grid" id="prv"></div>
-      <div class="upload-status" id="ust"></div>
-      <button class="btn-success" id="bs" disabled onclick="envoyerDrive()">
-        &#9729; Envoyer vers Google Drive
+      <div class="section-head">
+        <div class="section-head-left">&#127908; Notes vocales chantier</div>
+        <span id="rec-count" style="font-size:11px;color:var(--muted);font-weight:500;"></span>
+      </div>
+
+      <!-- Type de note -->
+      <div class="note-type-row">
+        <button class="note-type-btn active" onclick="setType('idée',this)">💡 Idée</button>
+        <button class="note-type-btn" onclick="setType('matériel',this)">🔧 Matériel</button>
+        <button class="note-type-btn" onclick="setType('mesure',this)">📐 Mesure</button>
+        <button class="note-type-btn" onclick="setType('problème',this)">⚠️ Problème</button>
+        <button class="note-type-btn" onclick="setType('tâche',this)">✅ Tâche</button>
+      </div>
+
+      <div class="mic-zone">
+        <button class="mic-btn idle" id="mic-btn" onclick="toggleRec()">
+          <span id="mic-ico">🎙️</span>
+          <span id="mic-txt">Appuyer pour dicter</span>
+        </button>
+        <div class="mic-timer" id="mic-timer"></div>
+        <div class="transcript-box empty" id="transcript">Votre note apparaîtra ici...</div>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button onclick="saveNote()" style="flex:1;padding:12px;background:var(--dark);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;">
+            💾 Enregistrer la note
+          </button>
+          <button onclick="clearTranscript()" style="padding:12px 16px;background:var(--surface);color:var(--muted);border:.5px solid var(--border);border-radius:12px;font-size:14px;cursor:pointer;">
+            🗑️
+          </button>
+        </div>
+      </div>
+
+      <!-- Liste des notes -->
+      <div id="notes-list" class="notes-list"></div>
+
+      <!-- Exporter en CSV pour Excel -->
+      <button class="btn-export" onclick="exportNotes()">
+        📊 Exporter notes vers Excel (CSV)
       </button>
     </div>
 
+    <!-- PHOTOS -->
     <div class="section-card">
-      <div class="section-head">&#128196; Documents</div>
+      <div class="section-head">
+        <div class="section-head-left">&#128247; Photos chantier</div>
+      </div>
+      <div class="photo-grid" id="pg"></div>
+      <div class="btn-row">
+        <button class="btn-cam" onclick="document.getElementById('pi-cam').click()">&#128247; Appareil</button>
+        <button class="btn-gal" onclick="document.getElementById('pi-gal').click()">&#128444; Galerie</button>
+      </div>
+      <input type="file" id="pi-cam" accept="image/*" capture="environment" multiple onchange="handleP(event)">
+      <input type="file" id="pi-gal" accept="image/*" multiple onchange="handleP(event)">
+      <div class="preview-grid" id="prv"></div>
+      <div class="upload-status" id="ust"></div>
+      <button class="btn-success" id="bs" disabled onclick="envoyerDrive()">&#9729; Envoyer vers Google Drive</button>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="section-card">
+      <div class="section-head"><div class="section-head-left">&#128196; Documents</div></div>
       <div id="dl"></div>
     </div>
   </div>
 
+  <!-- PAGE RECAP -->
   <div class="page" id="page-recap">
     <div class="recap-hero">
       <div class="recap-hero-label">CA Total TTC</div>
@@ -184,11 +262,7 @@ input[type=file]{display:none}
 </div>
 
 <script>
-// ── Configuration Google Drive ──────────────────────────────────────────────
-const FOLDER_ID = '1UaCgLP8GU8gny5Ec5nizdeFBHCl1kOjV';
-const UPLOAD_URL = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
-
-// ── Données clients ─────────────────────────────────────────────────────────
+const FOLDER_ID='1UaCgLP8GU8gny5Ec5nizdeFBHCl1kOjV';
 const CL=[
   {n:'Ralf Pfau',c:'p',d:5,f:5,c25:4169,c26:15475,docs:[{t:'f',n:'F-2026-04-155',dt:'09/04/2026',a:12985},{t:'f',n:'F-2026-03-149',dt:'18/03/2026',a:1345},{t:'d',n:'D-2026-04-181',dt:'07/04/2026',a:0}]},
   {n:'Dominique Huiban',c:'p',d:4,f:9,c25:0,c26:18540,docs:[{t:'f',n:'F-2026-03-139',dt:'02/03/2026',a:3200},{t:'f',n:'F-2026-02-134',dt:'12/02/2026',a:4100}]},
@@ -213,20 +287,156 @@ const CL=[
 ];
 
 const CC={e:{av:'av-b',tag:'tag-e',lb:'Electricité'},p:{av:'av-a',tag:'tag-p',lb:'Photovoltaïque'},b:{av:'av-g',tag:'tag-b',lb:'Borne recharge'}};
-const DI={d:'📋',f:'✅',a:'❌'};
-const DC={d:'d',f:'f',a:'a'};
-const PH={};
-let CUR=null, PP=[], PF=[];
+const DI={d:'📋',f:'✅',a:'❌'};const DC={d:'d',f:'f',a:'a'};
+const PH={};let CUR=null,PP=[],PF=[];
 
+// ── NOTES ────────────────────────────────────────────────────────────────────
+const NOTES={};
+let curType='idée';
+let recog=null,isRec=false,recTimer=null,recSec=0;
+
+const TYPE_ICONS={'idée':'💡','matériel':'🔧','mesure':'📐','problème':'⚠️','tâche':'✅'};
+const TYPE_COLORS={'idée':'#F59E0B','matériel':'#3B82F6','mesure':'#8B5CF6','problème':'#EF4444','tâche':'#10B981'};
+
+function setType(t,el){
+  curType=t;
+  document.querySelectorAll('.note-type-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleRec(){
+  if(!isRec) startRec(); else stopRec();
+}
+
+function startRec(){
+  const SpeechRec=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SpeechRec){
+    alert('La reconnaissance vocale n\'est pas disponible.\nVous pouvez taper votre note directement dans la zone de texte.');
+    const box=document.getElementById('transcript');
+    box.contentEditable='true';
+    box.classList.remove('empty');
+    if(box.textContent==='Votre note apparaîtra ici...')box.textContent='';
+    box.focus();
+    return;
+  }
+  recog=new SpeechRec();
+  recog.lang='fr-FR';
+  recog.continuous=true;
+  recog.interimResults=true;
+  recog.onresult=e=>{
+    let txt='';
+    for(let i=0;i<e.results.length;i++) txt+=e.results[i][0].transcript+' ';
+    const box=document.getElementById('transcript');
+    box.textContent=txt;
+    box.classList.remove('empty');
+  };
+  recog.onerror=()=>stopRec();
+  recog.onend=()=>{if(isRec)recog.start()};
+  recog.start();
+  isRec=true;
+  recSec=0;
+  document.getElementById('mic-btn').className='mic-btn recording';
+  document.getElementById('mic-ico').textContent='⏹️';
+  document.getElementById('mic-txt').textContent='En cours... Appuyer pour arrêter';
+  recTimer=setInterval(()=>{
+    recSec++;
+    const m=Math.floor(recSec/60).toString().padStart(2,'0');
+    const s=(recSec%60).toString().padStart(2,'0');
+    document.getElementById('mic-timer').textContent='⏱ '+m+':'+s;
+  },1000);
+}
+
+function stopRec(){
+  if(recog){recog.onend=null;recog.stop();}
+  isRec=false;
+  clearInterval(recTimer);
+  document.getElementById('mic-btn').className='mic-btn idle';
+  document.getElementById('mic-ico').textContent='🎙️';
+  document.getElementById('mic-txt').textContent='Appuyer pour dicter';
+  document.getElementById('mic-timer').textContent='';
+}
+
+function clearTranscript(){
+  document.getElementById('transcript').textContent='Votre note apparaîtra ici...';
+  document.getElementById('transcript').classList.add('empty');
+  document.getElementById('transcript').contentEditable='false';
+  stopRec();
+}
+
+function saveNote(){
+  const box=document.getElementById('transcript');
+  const txt=box.textContent.trim();
+  if(!txt||txt==='Votre note apparaîtra ici...'||!CUR){
+    alert('Aucune note à enregistrer !');return;
+  }
+  if(!NOTES[CUR])NOTES[CUR]=[];
+  NOTES[CUR].push({
+    type:curType,
+    texte:txt,
+    date:new Date().toLocaleDateString('fr-FR'),
+    heure:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})
+  });
+  clearTranscript();
+  renderNotes();
+  stopRec();
+}
+
+function renderNotes(){
+  if(!CUR)return;
+  const notes=NOTES[CUR]||[];
+  const el=document.getElementById('notes-list');
+  document.getElementById('rec-count').textContent=notes.length?notes.length+' note'+(notes.length>1?'s':''):'';
+  if(!notes.length){el.innerHTML='<div style="padding:0 0 10px;text-align:center;color:var(--faint);font-size:13px;font-style:italic;">Aucune note pour ce client</div>';return;}
+  el.innerHTML=notes.map((n,i)=>`
+    <div class="note-item">
+      <div class="note-item-header">
+        <span class="note-item-type" style="color:${TYPE_COLORS[n.type]}">${TYPE_ICONS[n.type]} ${n.type.toUpperCase()}</span>
+        <span class="note-item-date">${n.date} ${n.heure}</span>
+      </div>
+      <div class="note-item-text">${n.texte}</div>
+      <button class="note-del" onclick="delNote(${i})">×</button>
+    </div>`).join('');
+}
+
+function delNote(i){
+  if(!NOTES[CUR])return;
+  NOTES[CUR].splice(i,1);
+  renderNotes();
+}
+
+function exportNotes(){
+  if(!CUR||!NOTES[CUR]||!NOTES[CUR].length){
+    alert('Aucune note à exporter pour ce client !');return;
+  }
+  const notes=NOTES[CUR];
+  // Créer CSV avec BOM UTF-8 pour Excel
+  let csv='\uFEFFClient;Type;Date;Heure;Note\n';
+  notes.forEach(n=>{
+    const texte=n.texte.replace(/"/g,'""').replace(/\n/g,' ');
+    csv+=`"${CUR}";"${n.type}";"${n.date}";"${n.heure}";"${texte}"\n`;
+  });
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`Notes_${CUR.replace(/\s/g,'_')}_${new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ── CLIENTS ───────────────────────────────────────────────────────────────────
 function IN(n){return n.split(' ').slice(0,2).map(w=>w[0]&&w[0].toUpperCase()||'').join('')}
 function FM(v){return v?v.toLocaleString('fr-FR')+' €':'—'}
-function setStatus(msg, type){const el=document.getElementById('ust'); el.textContent=msg; el.className='upload-status '+type;}
+function setStatus(msg,type){const el=document.getElementById('ust');el.textContent=msg;el.className='upload-status '+type;}
 
 function RC(list){
   document.getElementById('cnt').textContent=list.length+' client'+(list.length>1?'s':'');
   document.getElementById('client-list').innerHTML=list.map(c=>{
     const cc=CC[c.c];
-    return'<div class="client-row" onclick="OC(\''+c.n.replace(/'/g,"\\'")+'\')"><div class="avatar '+cc.av+'">'+IN(c.n)+'</div><div class="client-info"><div class="tag '+cc.tag+'">'+cc.lb+'</div><div class="client-name">'+c.n+'</div><div class="client-sub">'+c.d+' devis · '+c.f+' factures</div></div><span class="row-arrow">›</span></div>';
+    const nb=NOTES[c.n]?NOTES[c.n].length:0;
+    return'<div class="client-row" onclick="OC(\''+c.n.replace(/'/g,"\\'")+'\')"><div class="avatar '+cc.av+'">'+IN(c.n)+'</div><div class="client-info"><div class="tag '+cc.tag+'">'+cc.lb+'</div><div class="client-name">'+c.n+'</div><div class="client-sub">'+c.d+' devis · '+c.f+' factures'+(nb?' · '+nb+' note'+(nb>1?'s':''):'')+'</div></div><span class="row-arrow">›</span></div>';
   }).join('');
 }
 
@@ -235,7 +445,7 @@ function filterClients(q){RC(CL.filter(c=>c.n.toLowerCase().includes(q.toLowerCa
 function OC(name){
   const c=CL.find(x=>x.n===name);
   if(!c)return;
-  CUR=name; PP=[]; PF=[];
+  CUR=name;PP=[];PF=[];
   document.getElementById('d-name').textContent=name;
   document.getElementById('d-d').textContent=c.d;
   document.getElementById('d-f').textContent=c.f;
@@ -247,19 +457,26 @@ function OC(name){
     const am=d.a?(ia?'- ':'')+d.a.toLocaleString('fr-FR')+' €':'Devis';
     return'<div class="doc-row"><div class="doc-ico '+DC[d.t]+'">'+DI[d.t]+'</div><div><div class="doc-num">'+d.n+'</div><div class="doc-meta">'+d.dt+'</div></div><div class="doc-amt" style="'+col+'">'+am+'</div></div>';
   }).join('');
-  RPG(); RPR();
+  RPG();RPR();
   document.getElementById('bs').disabled=true;
   document.getElementById('ust').className='upload-status';
+  renderNotes();
   SP('detail');
 }
 
-function goBack(){CUR=null;PP=[];PF=[];SP('clients');document.getElementById('tc').classList.add('active')}
+function goBack(){
+  stopRec();
+  CUR=null;PP=[];PF=[];
+  SP('clients');
+  document.getElementById('tc').classList.add('active');
+  RC(CL);
+}
 
 function RPG(){
   const g=document.getElementById('pg');
   const ex=PH[CUR]||[];
   g.innerHTML=ex.map(p=>'<div class="photo-cell"><img src="'+p.s+'" alt=""><div class="photo-date">'+p.dt+'</div></div>').join('')+
-  '<div class="photo-add" onclick="document.getElementById(\'pi\').click()"><span>+</span><span style="font-size:10px">Photo</span></div>';
+  '<div class="photo-add" onclick="document.getElementById(\'pi-cam\').click()"><span>+</span><span style="font-size:10px">Photo</span></div>';
 }
 
 function RPR(){
@@ -273,20 +490,13 @@ function handleP(e){
   if(!CUR||!files.length)return;
   let ld=0;
   const td=new Date().toLocaleDateString('fr-FR');
-  files.forEach((f,i)=>{
+  files.forEach(f=>{
     const r=new FileReader();
     r.onload=ev=>{
-      const ph={s:ev.target.result,dt:td,name:f.name,file:f};
+      const ph={s:ev.target.result,dt:td,file:f};
       if(!PH[CUR])PH[CUR]=[];
-      PH[CUR].push(ph);
-      PP.push(ph);
-      PF.push(f);
-      ld++;
-      if(ld===files.length){
-        RPG(); RPR();
-        setStatus('📸 '+PP.length+' photo(s) prête(s) — appuyez sur Envoyer','sending');
-        document.getElementById('bs').disabled=false;
-      }
+      PH[CUR].push(ph);PP.push(ph);PF.push(f);ld++;
+      if(ld===files.length){RPG();RPR();setStatus('📸 '+PP.length+' photo(s) prête(s)','info');document.getElementById('bs').disabled=false;}
     };
     r.readAsDataURL(f);
   });
@@ -296,74 +506,26 @@ function handleP(e){
 function RP(i){
   const p=PP[i];
   if(PH[CUR]){const idx=PH[CUR].indexOf(p);if(idx>-1)PH[CUR].splice(idx,1)}
-  PP.splice(i,1); PF.splice(i,1);
-  RPG(); RPR();
-  if(!PP.length){document.getElementById('bs').disabled=true; document.getElementById('ust').className='upload-status';}
+  PP.splice(i,1);PF.splice(i,1);RPG();RPR();
+  if(!PP.length){document.getElementById('bs').disabled=true;document.getElementById('ust').className='upload-status';}
 }
 
 async function envoyerDrive(){
-  if(!PP.length)return;
-  const btn=document.getElementById('bs');
-  btn.disabled=true;
-  setStatus('⏳ Envoi en cours vers Google Drive...','sending');
-
+  if(!PF.length)return;
+  document.getElementById('bs').disabled=true;
+  setStatus('⏳ Envoi vers Google Drive...','info');
   const today=new Date().toISOString().slice(0,10);
-  const clientSafe=CUR.replace(/[^a-zA-Z0-9\u00C0-\u024F ]/g,'_');
-  let ok=0, fail=0;
-
-  for(let i=0;i<PF.length;i++){
-    const f=PF[i];
-    const ext=f.name.split('.').pop()||'jpg';
-    const fname=clientSafe+'_'+today+'_'+(i+1)+'.'+ext;
-
+  if(navigator.share&&PF.length){
     try{
-      // Utilise l'API publique de téléchargement via le lien partagé
-      const meta={name:fname,parents:[FOLDER_ID]};
-      const form=new FormData();
-      form.append('metadata',new Blob([JSON.stringify(meta)],{type:'application/json'}));
-      form.append('file',f);
-
-      const resp=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{
-        method:'POST',
-        body:form
-      });
-
-      if(resp.ok||resp.status===401){
-        ok++;
-      } else {
-        fail++;
-      }
-    }catch(e){
-      fail++;
-    }
-  }
-
-  // Même si l'API directe ne marche pas, on ouvre Google Drive
-  const driveURL='https://drive.google.com/drive/folders/'+FOLDER_ID;
-
-  if(fail>0){
-    // Fallback : ouvre Google Drive pour déposer manuellement
-    setStatus('📂 Appuyez ici pour ouvrir Google Drive et déposer les photos','ok');
-    document.getElementById('ust').style.cursor='pointer';
-    document.getElementById('ust').onclick=()=>window.open(driveURL,'_blank');
-  } else {
-    setStatus('✅ '+ok+' photo(s) envoyée(s) dans Google Drive !','ok');
-  }
-
-  // Partage natif iPhone comme solution principale
-  if(navigator.share && PF.length){
-    try{
-      await navigator.share({
-        title:'Photos chantier - '+CUR,
-        text:'Photos du chantier '+CUR+' — '+today,
-        files:PF
-      });
-      setStatus('✅ Photos partagées ! Déposez-les dans le dossier SOLAIRE29_Photos de Drive','ok');
+      await navigator.share({title:'Photos chantier - '+CUR,text:'Photos chantier '+CUR+' — '+today,files:PF});
+      setStatus('✅ Photos partagées !','ok');
+      PP=[];PF=[];RPR();return;
     }catch(e){}
   }
-
-  PP=[]; PF=[];
-  RPR();
+  setStatus('📂 Appuyez ici pour ouvrir Google Drive','warn');
+  document.getElementById('ust').style.cursor='pointer';
+  document.getElementById('ust').onclick=()=>window.open('https://drive.google.com/drive/folders/'+FOLDER_ID,'_blank');
+  document.getElementById('bs').disabled=false;
 }
 
 function showTab(t){
@@ -373,7 +535,10 @@ function showTab(t){
   document.getElementById('t'+t[0]).classList.add('active');
 }
 function SP(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active')}
-function showAide(){alert('COMMENT ENVOYER UNE PHOTO\n\n1. Cherchez un client\n2. Appuyez sur "Prendre / Ajouter une photo"\n3. Prenez votre photo\n4. Appuyez sur "Envoyer vers Google Drive"\n5. Les photos vont automatiquement dans le bon dossier sur votre PC\n\nSi une fenetre de partage s\'ouvre, choisissez Google Drive et le dossier SOLAIRE29_Photos')}
+
+function showAide(){
+  alert('NOTES VOCALES\n\n1. Choisissez le type de note (Idée, Matériel, Mesure...)\n2. Appuyez sur le bouton micro\n3. Dictez votre note\n4. Appuyez sur Enregistrer\n5. Exportez en CSV pour ouvrir dans Excel\n\nPHOTOS\n📷 Appareil : prend une photo\n🖼 Galerie : choisit dans vos photos\nEnvoyez vers Google Drive\n\nSi la dictée ne marche pas\nTapez directement dans la zone de texte');
+}
 
 function GW(d){const dt=new Date(d);dt.setHours(0,0,0,0);dt.setDate(dt.getDate()+3-(dt.getDay()+6)%7);const w=new Date(dt.getFullYear(),0,4);return 1+Math.round(((dt-w)/86400000-(3-(w.getDay()+6)%7))/7)}
 const nw=new Date();
