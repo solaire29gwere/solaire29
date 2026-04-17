@@ -563,13 +563,21 @@ function handleP(e){
   if(!CUR||!files.length)return;
   let ld=0;
   const td=new Date().toLocaleDateString('fr-FR');
-  files.forEach(f=>{
+  const today=new Date().toISOString().slice(0,10);
+  const clientSafe=CUR.replace(/[^a-zA-Z0-9\u00C0-\u024F]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+  files.forEach((f,i)=>{
     const r=new FileReader();
     r.onload=ev=>{
-      const ph={s:ev.target.result,dt:td,file:f};
+      // Renommer automatiquement avec le nom du client + date + numéro
+      const ext=f.name.split('.').pop()||'jpg';
+      const num=PP.length+i+1;
+      const newName=clientSafe+'_'+today+'_'+num+'.'+ext;
+      // Créer un nouveau File avec le bon nom
+      const renamedFile=new File([f], newName, {type:f.type||'image/jpeg'});
+      const ph={s:ev.target.result,dt:td,file:renamedFile,name:newName};
       if(!PH[CUR])PH[CUR]=[];
-      PH[CUR].push(ph);PP.push(ph);PF.push(f);ld++;
-      if(ld===files.length){RPG();RPR();setStatus('📸 '+PP.length+' photo(s) prête(s)','info');document.getElementById('bs').disabled=false;}
+      PH[CUR].push(ph);PP.push(ph);PF.push(renamedFile);ld++;
+      if(ld===files.length){RPG();RPR();setStatus('📸 '+PP.length+' photo(s) prête(s) — nommées avec "'+clientSafe+'"','info');document.getElementById('bs').disabled=false;}
     };
     r.readAsDataURL(f);
   });
